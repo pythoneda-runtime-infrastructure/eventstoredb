@@ -1,10 +1,10 @@
 # vim: set fileencoding=utf-8
 """
-pythoneda/shared/runtime/events/lifecycle/boot.py
+pythoneda/runtime/infrastructure/eventstoredb/eventstoredb.py
 
-This script defines the Boot class.
+This script defines the EventStoreDB class.
 
-Copyright (C) 2024-today rydnr's pythoneda-runtime/boot
+Copyright (C) 2024-today rydnr's pythoneda-runtime-infrastructure/eventstoredb
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -20,17 +20,20 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 from pythoneda.shared import EventListener, listen
-from pythoneda.runtime.events.lifecycle import Booted, BootRequested
+from pythoneda.runtime.infrastructure.events.eventstoredb import (
+    EventstoredbBooted,
+    EventstoredbBootRequested,
+)
 
 
-class Boot(EventListener):
+class EventStoreDB(EventListener):
     """
-    Reacts to BootRequested events.
+    Reacts to EventStoreDB infrastructure events.
 
     Class name: Boot
 
     Responsibilities:
-        - Boot up PythonEDA domains.
+        - Boot up EventStoreDB.
 
     Collaborators:
         - None
@@ -38,7 +41,7 @@ class Boot(EventListener):
 
     def __init__(self):
         """
-        Creates a new Boot instance.
+        Creates a new EventStoreDB instance.
         """
         super().__init__()
 
@@ -47,7 +50,7 @@ class Boot(EventListener):
         """
         Retrieves the singleton instance.
         :return: Such instance.
-        :rtype: pythoneda.artifact.git.GitArtifact
+        :rtype: pythoneda.runtime.infrastructure.eventstoredb.EventStoreDB
         """
         if cls._singleton is None:
             cls._singleton = cls.initialize()
@@ -55,15 +58,17 @@ class Boot(EventListener):
         return cls._singleton
 
     @classmethod
-    @listen(BootRequested)
-    async def listen_BootRequested(cls, event: BootRequested) -> Booted:
+    @listen(EventstoredbBootRequested)
+    async def listen_EventstoredbBootRequested(
+        cls, event: EventstoredbBootRequested
+    ) -> EventstoredbBooted:
         """
-        Gets notified of a BootRequested event.
-        Emits a Booted event.
+        Gets notified of a EventstoredbBootRequested event.
+        Emits a EventstoreBooted event.
         :param event: The event.
-        :type event: pythoneda.runtime.events.lifecycle.BootRequested
-        :return: The event of a domain booted up.
-        :rtype: pythoneda.runtime.events.lifecycle.Booted
+        :type event: pythoneda.runtime.infrastructure.events.eventstoredb.EventstoredbBootRequested
+        :return: The event of EventStoreDB booted up.
+        :rtype: pythoneda.runtime.infrastructure.events.eventstoredb.EventstoredbBooted
         """
         print("TODO!!!!")
 
